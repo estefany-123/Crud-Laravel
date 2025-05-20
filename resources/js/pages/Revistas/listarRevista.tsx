@@ -4,6 +4,7 @@ import { useForm } from "@inertiajs/react";
 import { route } from 'ziggy-js';
 import { FormEvent } from "react";
 import RevistasForm from "../Revistas/crearRevista";
+import { Categoria } from "../home";
 
 interface Revista {
     id: number;
@@ -13,7 +14,7 @@ interface Revista {
     categoria_id : number
 }
 
-export default function ListarRevistas({ revistas }: { revistas: Revista[] }) {
+export default function ListarRevistas({ revistas, categorias }: { revistas: Revista[], categorias: Categoria[] }) {
   const {
     data,
     setData,
@@ -28,7 +29,7 @@ export default function ListarRevistas({ revistas }: { revistas: Revista[] }) {
     titulo: '',
     editorial: '',
     anio_publicacion: '',
-    categoria_id: 0
+    categoria_id: 1
   });
 
   function handleSubmit(e: FormEvent) {
@@ -71,6 +72,7 @@ export default function ListarRevistas({ revistas }: { revistas: Revista[] }) {
               <th className="px-6 py-3 border border-gray-300">Titulo</th>
               <th className="px-6 py-3 border border-gray-300">Editorial</th>
               <th className="px-6 py-3 border border-gray-300">Año publicacion</th>
+              <th className="px-6 py-3 border border-gray-300">Categoría</th>
               <th className="px-6 py-3 border border-gray-300">Acciones</th>
             </tr>
           </thead>
@@ -80,6 +82,7 @@ export default function ListarRevistas({ revistas }: { revistas: Revista[] }) {
                 <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.titulo}</td>
                 <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.editorial}</td>
                 <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.anio_publicacion}</td>
+                <td className="px-6 py-4 border border-gray-300 text-black text-center">{categorias.find(c=>c.id === libro.categoria_id)?.nombre}</td>
                 <td className="px-6 py-4 border border-gray-300 text-center">
                   <button
                     onClick={() => handleEdit(libro)}
@@ -107,6 +110,7 @@ export default function ListarRevistas({ revistas }: { revistas: Revista[] }) {
         handleCancel={handleCancel}
         processing={processing}
         errors={errors}
+        categorias={categorias}
       />
     </DefaultLayout>
   );

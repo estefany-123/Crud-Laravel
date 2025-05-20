@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Revista;
+use App\Models\Categoria;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,11 @@ class RevistasController extends Controller
      */
     public function index()
     {
+        $categorias = Categoria::all();
         $revistas = Revista::all();
         return Inertia::render('Revistas/listarRevista',[
-            'revistas' => $revistas
+            'revistas' => $revistas,
+            'categorias' => $categorias
         ]);
     }
 
@@ -36,7 +39,7 @@ class RevistasController extends Controller
             'titulo' => 'required|string|max:255',
             'editorial' => 'required|string|max:255',
             'anio_publicacion' => 'required|string|max:255',
-            'categoria_id' => 'required|integer|max:2'
+            'categoria_id' => 'required|integer|max:10'
         ]);
 
         Revista::create($validated);
@@ -75,7 +78,7 @@ class RevistasController extends Controller
             'titulo' => 'required|string|max:255',
             'editorial' => 'required|string|max:255',
             'anio_publicacion' => 'required|string|max:255',
-            'categoria_id' => 'required|integer|max:2'
+            'categoria_id' => 'required|integer|max:10'
         ]);
 
         $revista->update($validated);

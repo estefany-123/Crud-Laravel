@@ -3,6 +3,7 @@
 import { FormEventHandler } from "react";
 import { Input } from "@/components/ui/input"; // o tu input personalizado
 import { Button } from "@/components/ui/button";
+import { Categoria } from "../home";
 
 interface RevistasFormProps {
   data: {
@@ -17,6 +18,7 @@ interface RevistasFormProps {
   handleCancel: () => void;
   processing: boolean;
   errors: Record<string, string>;
+  categorias: Categoria[]
 }
 
 export default function RevistasForm({
@@ -26,6 +28,7 @@ export default function RevistasForm({
   handleCancel,
   processing,
   errors,
+  categorias
 }: RevistasFormProps) {
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 space-y-4">
@@ -63,11 +66,16 @@ export default function RevistasForm({
 
        <div>
         <label className="block text-sm font-medium text-gray-700">Categoria</label>
-        <textarea
+        <select
           value={data.categoria_id}
           onChange={(e) => setData("categoria_id", e.target.value)}
           className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-        />
+          required
+        >
+          {categorias?.map((categoria)=>(
+            <option value={categoria.id}>{categoria.nombre}</option>
+          ))}
+        </select>
         {errors.categoria_id && <p className="text-red-500 text-sm mt-1">{errors.categoria_id}</p>}
       </div>
 

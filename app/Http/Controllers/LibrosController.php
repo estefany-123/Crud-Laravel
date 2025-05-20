@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Libro;
+use App\Models\Categoria;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,10 @@ class LibrosController extends Controller
     public function index()
     {
         $libros = Libro::all();
+        $categorias = Categoria::all();
         return Inertia::render('home', [
-            'libros' => $libros
+            'libros' => $libros,
+            'categorias' => $categorias
         ]);
     }
 
@@ -37,7 +40,7 @@ class LibrosController extends Controller
             'autor' => 'required|string|max:255',
             'editorial' => 'required|string|max:255',
             'anio_publicacion' => 'required|string|max:255',
-            'categoria_id' => 'required|integer|max:2',
+            'categoria_id' => 'required|integer|max:10',
         ]);
 
         Libro::create($validated);

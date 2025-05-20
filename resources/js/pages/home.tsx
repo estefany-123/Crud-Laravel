@@ -14,7 +14,12 @@ interface Libro {
     categoria_id : number
 }
 
-export default function Home({ libros }: { libros: Libro[] }) {
+export interface Categoria {
+  id: number;
+  nombre: string;
+}
+
+export default function Home({ libros, categorias }: { libros: Libro[], categorias: Categoria[] }) {
   const {
     data,
     setData,
@@ -30,7 +35,7 @@ export default function Home({ libros }: { libros: Libro[] }) {
     autor: '',
     editorial: '',
     anio_publicacion: '',
-    categoria_id: 0
+    categoria_id: 1
   });
 
   function handleSubmit(e: FormEvent) {
@@ -74,6 +79,7 @@ export default function Home({ libros }: { libros: Libro[] }) {
               <th className="px-6 py-3 border border-gray-300">Nombre</th>
               <th className="px-6 py-3 border border-gray-300">Autor</th>
               <th className="px-6 py-3 border border-gray-300">Fecha creación</th>
+              <th className="px-6 py-3 border border-gray-300">Categoría</th>
               <th className="px-6 py-3 border border-gray-300">Acciones</th>
             </tr>
           </thead>
@@ -83,6 +89,7 @@ export default function Home({ libros }: { libros: Libro[] }) {
                 <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.titulo}</td>
                 <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.autor}</td>
                 <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.anio_publicacion}</td>
+                <td className="px-6 py-4 border border-gray-300 text-black text-center">{categorias.find(c=>c.id === libro.categoria_id)?.nombre}</td>
                 <td className="px-6 py-4 border border-gray-300 text-center">
                   <button
                     onClick={() => handleEdit(libro)}
@@ -110,6 +117,7 @@ export default function Home({ libros }: { libros: Libro[] }) {
         handleCancel={handleCancel}
         processing={processing}
         errors={errors}
+        categorias={categorias}
       />
     </DefaultLayout>
   );
