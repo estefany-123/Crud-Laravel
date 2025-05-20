@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Libros;
+use App\Models\Libro;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,7 @@ class LibrosController extends Controller
      */
     public function index()
     {
-        $libros = Libros::all();
+        $libros = Libro::all();
         return Inertia::render('home', [
             'libros' => $libros
         ]);
@@ -33,10 +33,14 @@ class LibrosController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
+            'titulo' => 'required|string|max:255',
+            'autor' => 'required|string|max:255',
+            'editorial' => 'required|string|max:255',
+            'anio_publicacion' => 'required|string|max:255',
+            'categoria_id' => 'required|integer|max:255',
         ]);
 
-        Libros::create($validated);
+        Libro::create($validated);
 
         return redirect()->route('libros.index')->with('message', 'Libro creado con éxito.');
     }
@@ -44,7 +48,7 @@ class LibrosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Libros $libro)
+    public function show(Libro $libro)
     {
         return Inertia::render('libros/show', [
             'libro' => $libro
@@ -54,21 +58,25 @@ class LibrosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Libros $libro)
+    public function edit(Libro $libro)
     {
         return Inertia::render('home', [
             'libro' => $libro,
-            'libros' => Libros::all()
+            'libros' => Libro::all()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Libros $libro)
+    public function update(Request $request, Libro $libro)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
+             'titulo' => 'required|string|max:255',
+            'autor' => 'required|string|max:255',
+            'editorial' => 'required|string|max:255',
+            'anio_publicacion' => 'required|string|max:255',
+            'categoria_id' => 'required|integer|max:255',
         ]);
 
         $libro->update($validated);
@@ -79,7 +87,7 @@ class LibrosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Libros $libro)
+    public function destroy(Libro $libro)
     {
         $libro->delete();
 

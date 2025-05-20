@@ -30,6 +30,7 @@ export default function LibrosForm({
 }: LibrosFormProps) {
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 space-y-4">
+ 
       <div>
         <label className="block text-sm font-medium text-gray-700">Titulo</label>
         <Input

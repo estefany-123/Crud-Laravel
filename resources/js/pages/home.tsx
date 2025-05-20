@@ -6,9 +6,12 @@ import { FormEvent } from "react";
 import LibroForm from "../pages/crear_libros";
 
 interface Libro {
-  id: number;
-  nombre: string;
-  created_at: string;
+    id: number;
+    titulo: string;
+    autor: string;
+    editorial : string;
+    anio_publicacion : string;
+    categoria_id : number
 }
 
 export default function Home({ libros }: { libros: Libro[] }) {
@@ -23,7 +26,11 @@ export default function Home({ libros }: { libros: Libro[] }) {
     reset,
   } = useForm({
     id: null as number | null,
-    nombre: '',
+    titulo: '',
+    autor: '',
+    editorial: '',
+    anio_publicacion: '',
+    categoria_id: 0
   });
 
   function handleSubmit(e: FormEvent) {
@@ -36,7 +43,14 @@ export default function Home({ libros }: { libros: Libro[] }) {
   }
 
   function handleEdit(libro: Libro) {
-    setData({ id: libro.id, nombre: libro.nombre });
+    setData({
+      id: libro.id,
+      titulo: libro.titulo,
+      autor: libro.autor,
+      editorial: libro.editorial,
+      anio_publicacion: libro.anio_publicacion,
+      categoria_id: libro.categoria_id
+    });
   }
 
   function handleDelete(id: number) {
@@ -58,6 +72,7 @@ export default function Home({ libros }: { libros: Libro[] }) {
           <thead>
             <tr className="bg-gray-200 text-gray-700">
               <th className="px-6 py-3 border border-gray-300">Nombre</th>
+              <th className="px-6 py-3 border border-gray-300">Autor</th>
               <th className="px-6 py-3 border border-gray-300">Fecha creación</th>
               <th className="px-6 py-3 border border-gray-300">Acciones</th>
             </tr>
@@ -65,8 +80,9 @@ export default function Home({ libros }: { libros: Libro[] }) {
           <tbody>
             {libros?.map((libro) => (
               <tr key={libro.id}>
-                <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.nombre}</td>
-                <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.created_at}</td>
+                <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.titulo}</td>
+                <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.autor}</td>
+                <td className="px-6 py-4 border border-gray-300 text-black text-center">{libro.anio_publicacion}</td>
                 <td className="px-6 py-4 border border-gray-300 text-center">
                   <button
                     onClick={() => handleEdit(libro)}
