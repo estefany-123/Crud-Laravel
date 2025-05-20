@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\revistas;
+use App\Models\Revista;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -13,8 +13,8 @@ class RevistasController extends Controller
      */
     public function index()
     {
-        $revistas = revistas::all();
-        return Inertia::render('listarRevista',[
+        $revistas = Revista::all();
+        return Inertia::render('Revistas/listarRevista',[
             'revistas' => $revistas
         ]);
     }
@@ -24,7 +24,7 @@ class RevistasController extends Controller
      */
     public function create()
     {
-        return Inertia::render('crearRevista');
+        return Inertia::render('Revistas/crearRevista');
     }
 
     /**
@@ -35,11 +35,11 @@ class RevistasController extends Controller
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
             'editorial' => 'required|string|max:255',
-            'anio_publicacion' => 'required|year|max:255',
-            'categoria_id' => 'required|number'
+            'anio_publicacion' => 'required|string|max:255',
+            'categoria_id' => 'required|integer|max:2'
         ]);
 
-        revistas::created($validated);
+        Revista::create($validated);
 
 
         return redirect()->route('revistas.index')->with('message', 'Revista creada con éxito.');
@@ -48,34 +48,34 @@ class RevistasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(revistas $revista)
+    public function show(Revista $revista)
     {
         return Inertia::render('revistas/show', [
-            'revista' => $revista
+            'revistas' => $revista
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(revistas $revista)
+    public function edit(Revista $revista)
     {
         return Inertia::render('crearRevista', [
             'revista' => $revista,
-            'revistas' => revistas::all()
+            'revistas' => Revista::all()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, revistas $revista)
+    public function update(Request $request, Revista $revista)
     {
          $validated = $request->validate([
             'titulo' => 'required|string|max:255',
             'editorial' => 'required|string|max:255',
-            'anio_publicacion' => 'required|year|max:255',
-            'categoria_id' => 'required|number'
+            'anio_publicacion' => 'required|string|max:255',
+            'categoria_id' => 'required|integer|max:2'
         ]);
 
         $revista->update($validated);
@@ -86,7 +86,7 @@ class RevistasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(revistas $revista)
+    public function destroy(Revista $revista)
     {
         $revista->delete();
 

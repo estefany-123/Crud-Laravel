@@ -37,7 +37,7 @@ class LibrosController extends Controller
             'autor' => 'required|string|max:255',
             'editorial' => 'required|string|max:255',
             'anio_publicacion' => 'required|string|max:255',
-            'categoria_id' => 'required|integer|max:255',
+            'categoria_id' => 'required|integer|max:2',
         ]);
 
         Libro::create($validated);
