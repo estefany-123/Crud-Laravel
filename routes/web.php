@@ -8,3 +8,6 @@ use App\Http\Controllers\RevistasController;
 Route::resource('libros', LibrosController::class);
 Route::resource('categorias', CategoriasController::class);
 Route::resource('revistas', RevistasController::class);
+Route::get("/",function(){
+    return redirect("/libros");
+});
